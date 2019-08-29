@@ -15,7 +15,6 @@ if($argc<4 || $argc>5) {
     exit(1);
 }
 
-$d = $day;
 $m = (($month - 2 - 1 ) + 12 ) % 12 + 1 ; // this is because of the modulo
 $c = substr($year, 0, 2);
 if($m>=11) {
@@ -26,7 +25,7 @@ if($m>=11) {
     $y = substr($year-1, 2, 2);
 }
 
-$w = ($d + intval (2.6 * $m - 0.2) + $y  + intval ($y/4) + intval ($c/4) - 2*$c ) % 7;
+$w = ($day + intval (2.6 * $m - 0.2) + $y  + intval ($y/4) + intval ($c/4) - 2*$c ) % 7;
 $weekdayNames = ["Sonntag","Montag","Dienstag","Mitwoch","Donnerstag","Freitag","Samstag"];
 $weekday = $weekdayNames[$w];
 
