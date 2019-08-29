@@ -29,13 +29,46 @@ $weekdayNumber = ($day + intval (2.6 * $m - 0.2) + $y  + intval ($y/4) + intval 
 
 $weekday = getWeekdayForWeekdayNumber($weekdayNumber);
 
-echo "Eingabe: {$day}.{$month}.{$year}\n";
-echo strftime("Berechnung PHP: Wochentag='%A'\n",strtotime("$year-$month-$day"));
-echo "Berechnung Algorithmus: Wochentag='{$weekday}'\n";
-if($argc>4 && ( $argv[4]=='-d' || $argv[4]=='--debug')) {
-    echo "DEBUG: m={$m} y={$y} c={$c}\n";
-}
 
+printEingabe($day, $month, $year);
+printPhpFunction($year, $month, $day);
+printAlgorythmus($weekday);
+printDebug($m, $y, $c);
+
+/**
+ * @param int $m
+ * @param $y
+ * @param $c
+ */
+function printDebug(int $m, $y, $c): void {
+    global $argc;
+    global $argv;
+    if ($argc > 4 && ($argv[4] == '-d' || $argv[4] == '--debug')) {
+        echo "DEBUG: m={$m} y={$y} c={$c}\n";
+    }
+}
+/**
+ * @param $weekday
+ */
+function printAlgorythmus($weekday): void {
+    echo "Berechnung Algorithmus: Wochentag='{$weekday}'\n";
+}
+/**
+ * @param $year
+ * @param $month
+ * @param $day
+ */
+function printPhpFunction($year, $month, $day): void {
+    echo strftime("Berechnung PHP: Wochentag='%A'\n", strtotime("$year-$month-$day"));
+}
+/**
+ * @param $day
+ * @param $month
+ * @param $year
+ */
+function printEingabe($day, $month, $year): void {
+    echo "Eingabe: {$day}.{$month}.{$year}\n";
+}
 /**
  * @param int $w
  * @return mixed
