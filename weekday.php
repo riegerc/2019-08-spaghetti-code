@@ -5,26 +5,38 @@
  */
 
 setlocale(LC_TIME, 'de_AT.utf-8');
-    //TODO: find something to do
+
 main($argc,$argv);
 
 function main($argc,$argv): void {
     list($day, $month, $year) = argumentHandling($argc, $argv);
-    $m = (($month - 2 - 1) + 12) % 12 + 1; // this is because of the modulo
-    if ($m >= 11) {
-        $c = substr($year - 1, 0, 2);
-        $y = substr($year - 1, 2, 2);
-    }else{
-        $c = substr($year, 0, 2);
-        $y = substr($year, 2, 2);
-    }
+    list($julianMonth, $c, $y, $weekdayNumber) = calcWeekdayNumber($month, $year, $day);
 
-    $weekdayNumber = ($day + intval(2.6 * $m - 0.2) + $y + intval($y / 4) + intval($c / 4) - 2 * $c) % 7;
     $weekday = getWeekdayForWeekdayNumber($weekdayNumber);
     printEingabe($day, $month, $year);
     printPhpFunction($year, $month, $day);
     printAlgorythmus($weekday);
-    printDebug($m, $y, $c);
+    printDebug($julianMonth, $y, $c);
+}
+
+/**
+ * @param $month
+ * @param $year
+ * @param $day
+ * @return array
+ */
+function calcWeekdayNumber($month, $year, $day): array {
+    $julianMonth = (($month - 2 - 1) + 12) % 12 + 1; // this is because of the modulo
+    if ($julianMonth >= 11) {
+        $c = substr($year - 1, 0, 2);
+        $y = substr($year - 1, 2, 2);
+    } else {
+        $c = substr($year, 0, 2);
+        $y = substr($year, 2, 2);
+    }
+
+    $weekdayNumber = ($day + intval(2.6 * $julianMonth - 0.2) + $y + intval($y / 4) + intval($c / 4) - 2 * $c) % 7;
+    return array($julianMonth, $c, $y, $weekdayNumber);
 }
 
 /**
